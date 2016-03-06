@@ -1,0 +1,786 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    <!--
+        Customize the content security policy in the meta tag below as needed. Add 'unsafe-inline' to default-src to enable inline JavaScript.
+        For details, see http://go.microsoft.com/fwlink/?LinkID=617521
+    -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EssdeeMobileApp</title>
+
+    <!-- EssdeeMobileApp references -->
+    <link href="css/index.css" rel="stylesheet" />
+    <link rel="import" href="bower_components/paper-button/paper-button.html" />
+    <link rel="import" href="bower_components/paper-drawer-panel/paper-drawer-panel.html" />
+    <link rel="import" href="bower_components/paper-header-panel/paper-header-panel.html" />
+    <link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html" />
+    <link rel="import" href="bower_components/paper-menu/paper-menu.html" />
+    <link rel="import" href="bower_components/paper-menu/paper-submenu.html" />
+    <link rel="import" href="bower_components/paper-item/paper-item.html" />
+    <link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html" />
+    <link rel="import" href="bower_components/iron-pages/iron-pages.html" />
+    <link rel="import" href="bower_components/iron-icons/iron-icons.html" />
+    <link rel="import" href="bower_components/iron-icons/notification-icons.html" />
+    <link rel="import" href="bower_components/iron-icons/maps-icons.html" />
+    <link rel="import" href="bower_components/paper-card/paper-card.html" />
+    <link rel="import" href="bower_components/paper-fab/paper-fab.html" />
+    <link rel="import" href="bower_components/paper-item/paper-icon-item.html" />
+    <link rel="import" href="bower_components/paper-item/paper-item-body.html" />
+    <link rel="import" href="bower_components/paper-tabs/paper-tabs.html" />
+    <link rel="import" href="bower_components/paper-tabs/paper-tab.html" />
+    <link rel="import" href="bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+
+    <!— Additional LINKS for the TABLE —>
+    <link rel="stylesheet" href="css/pure-min.css">
+    
+    <!— LINKS END HERE —>
+
+
+
+
+    <style is="custom-style">
+     section{
+            position:relative;
+        }
+
+        .paper_material{
+            padding-top:20px;
+            display:block;
+            max-width:250px;
+            margin-left: auto;
+            margin-right:auto;
+            margin-top:10%;
+
+        }
+        .buttons{
+            display:block;
+            margin-left: auto;
+            margin-right:auto;
+        }
+       
+        .avatar {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #ccc;
+        }
+
+        .list   {
+               background-color: white;
+            display: block;
+            width: 240px;
+            margin-left: auto;
+            margin-right:auto;
+            }
+            .sublist {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+            paper-tabs.cyan::shadow #selectionBar {
+      background-color: #3f51b5;
+    }
+            paper-dropdown-menu {
+      text-align: left;
+      margin: auto;
+      width: 180px;
+    }
+    paper-dropdown-menu.letters {
+      width: 90px;
+    }
+    .horizontal-section {
+      text-align: center;
+    }
+    </style> 
+
+</head>
+<body>
+    
+    <template is="dom-bind" id="app">
+        <paper-drawer-panel responsive-width="820px">
+            <paper-header-panel mode="waterfall-tall" tallClass="medium-tall" shadow="true" drawer>
+
+                <paper-toolbar style="background-color:#5c6bc0" class="medium-tall">
+                    <div class="avatar orange middle"></div>
+                    <div class="bottom">User</div>
+                </paper-toolbar>
+
+                <paper-menu selected="{{page}}">
+                    <paper-item label="Home" style="position:relative;display:block;">
+                        <paper-ripple></paper-ripple>
+                        <paper-icon-button icon="home" style="color:#ba68c8">
+                        </paper-icon-button>
+                        <span style="color:darkcyan">
+                            Home
+                        </span>
+                    </paper-item>
+
+                    <paper-item label="Due Bills" style="position:relative;display:block;">
+                        <paper-ripple></paper-ripple>
+                        <paper-icon-button icon="class" style="color:#64b5f6">
+                        </paper-icon-button>
+                        <span style="color:darkcyan">
+                            Due Bills
+                        </span>
+                    </paper-item>
+
+                    <paper-item label="Place Order" style="position:relative;display:block;">
+                        <paper-ripple></paper-ripple>
+                        <paper-icon-button icon="shopping-cart" style="color:#4db6ac">
+                        </paper-icon-button>
+                        <span style="color:darkcyan">
+                            Place order
+                        </span>
+                    </paper-item>
+
+                    <paper-item label="Order status" style="position:relative;display:block;">
+                        <paper-ripple></paper-ripple>
+                        <paper-icon-button icon="speaker-notes" style="color:#a1887f">
+                        </paper-icon-button>
+                        <span style="color:darkcyan">
+                            Order status
+                        </span>
+                    </paper-item>
+                </paper-menu>
+            </paper-header-panel>
+
+            <paper-header-panel main mode="standard">
+                <paper-toolbar style="background-color:#3f51b5">
+                    <paper-icon-button icon="menu" alt="menu" paper-drawer-toggle>
+                    </paper-icon-button>
+                    <div id="toolbarName" style="color:white">
+                        Home
+                    </div>
+                </paper-toolbar>
+                <iron-pages selected="{{page}}" flex>
+                    <section>
+                        <paper-material elevation="3" style="height:175px;">
+                            <div style="margin-left:40%">
+							
+                                <img src="images/logo.jpg" style="height:75px;width:75px;color:lightpink" />
+                            </div>
+                            <div style="text-align:center">
+                                <div>Offers, Schemes, Festive wishes and Other important announcements for dealers goes here !</div>
+                            </div>
+                        </paper-material>
+                        <paper-material class="paper_material" elevation="3" style="height:140px">
+                            <div class="content_cards">
+                                <div class="list short" role="listbox">
+                                    <paper-icon-item>
+                                        <paper-fab icon="report" mini item-icon style="background-color:#e57373"></paper-fab>
+                                        <div>Rs.60,000.00</div>
+                                    </paper-icon-item>
+                                    <paper-icon-item>
+                                        <div style="color:lightslategrey; font-size:13px;">The amount is pending for more than 60 Days</div>
+                                    </paper-icon-item>
+                                </div>
+                            </div>
+                            <paper-button onclick="toDueBills();" style="width:250px;background-color:#e0e0e0;color:black;" class="buttons">View pending bills</paper-button>
+                        </paper-material>
+
+                        <paper-material class="paper_material" elevation="3" style="height:140px">
+                            <div class="content_cards">
+                                <div class="list short" role="listbox">
+                                    <paper-icon-item>
+                                        <paper-fab icon="notification:event-note" mini item-icon style="background-color:#ff8a65"></paper-fab>
+                                        <div>Rs.1,60,000.00</div>
+                                    </paper-icon-item>
+                                    <paper-icon-item>
+                                        <div style="color:lightslategrey; font-size:13px;">Your total due bill amount</div>
+                                    </paper-icon-item>
+                                </div>
+                            </div>
+                            <paper-button onclick="toDueBills();" style="width:250px;background-color:#e0e0e0;" class="buttons">View due bills</paper-button>
+                        </paper-material>
+
+                        <paper-material class="paper_material" elevation="3">
+                            <div class="content_cards">
+                                <div class="list short" role="listbox">
+                                    <paper-icon-item>
+                                        <paper-fab icon="exit-to-app" mini item-icon style="background-color:#64b5f6"></paper-fab>
+                                        <div>Dispatched Orders</div>
+                                    </paper-icon-item>
+                                    <paper-menu>
+                                        <paper-submenu>
+                                            <paper-item class="menu-trigger" style="background-color:#e0e0e0">Click to see recent dispatch</paper-item>
+                                            <paper-menu class="menu-content sublist">
+                                                <paper-item>
+                                                    <paper-item-body two-line>
+                                                        <div>LR.No: TN39A2938</div>
+                                                        <div secondary>Bill No:293949</div>
+                                                    </paper-item-body>
+                                                </paper-item>
+                                                <paper-item>
+                                                    <paper-item-body two-line>
+                                                        <div>LR.No: KA11U5936</div>
+                                                        <div secondary>Bill No:295749</div>
+                                                    </paper-item-body>
+                                                </paper-item>
+                                                <paper-item>
+                                                    <paper-item-body two-line>
+                                                        <div>LR.No: PB21R1788</div>
+                                                        <div secondary>Bill No:19989</div>
+                                                    </paper-item-body>
+                                                </paper-item>
+                                            </paper-menu>
+                                        </paper-submenu>
+                                        <paper-submenu disabled>
+                                            <paper-item class="menu-trigger">For details , Go to Order status</paper-item>
+                                        </paper-submenu>
+                                    </paper-menu>
+                                </div>
+                            </div>
+                        </paper-material>
+
+                        <paper-material class="paper_material" elevation="3">
+                            <div class="content_cards">
+                                <div class="list short" role="listbox">
+                                    <paper-icon-item>
+                                        <paper-fab icon="shopping-cart" mini item-icon style="background-color:#81c784"></paper-fab>
+                                        <div>Recent Orders</div>
+                                    </paper-icon-item>
+                                    <paper-menu>
+                                        <paper-submenu>
+                                            <paper-item class="menu-trigger" style="background-color:#e0e0e0">Click to view recent orders</paper-item>
+                                            <paper-menu class="menu-content sublist">
+                                                <paper-item>
+                                                    <paper-item-body two-line>
+                                                        <div>Order id: 568956</div>
+                                                        <div secondary>Placed on: 23/11/2015</div>
+                                                    </paper-item-body>
+                                                </paper-item>
+                                                <paper-item>
+                                                    <paper-item-body two-line>
+                                                        <div>Order id: 568932</div>
+                                                        <div secondary>Placed on: 05/11/2015</div>
+                                                    </paper-item-body>
+                                                </paper-item>
+                                                <paper-item>
+                                                    <paper-item-body two-line>
+                                                        <div>Order id: 568902</div>
+                                                        <div secondary>Placed on: 14/10/2015</div>
+                                                    </paper-item-body>
+                                                </paper-item>
+                                            </paper-menu>
+                                        </paper-submenu>
+                                        <paper-submenu disabled>
+                                            <paper-item class="menu-trigger">For details , Go to Order status</paper-item>
+                                        </paper-submenu>
+                                    </paper-menu>
+                                </div>
+                            </div>
+                        </paper-material>
+
+                        <paper-material elevation="3" style="height:20px;text-align:center;margin-top:30px">
+                            Last sync : 10 minutes ago
+                        </paper-material>
+                    </section>
+
+                    <section>
+                        <table class="pure-table" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>BILL NO</th>
+                                    <th>DUE AMOUNT</th>
+                                    <th>Year</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr class="pure-table-odd">
+                                    <td>1</td>
+                                    <td>SD-765446</td>
+                                    <td>60,000</td>
+                                    <td>61 days</td>
+                                </tr>
+
+                                <tr>
+                                    <td>2</td>
+                                    <td>SD-456283</td>
+                                    <td>12,110</td>
+                                    <td>28 days</td>
+                                </tr>
+
+                                <tr class="pure-table-odd">
+                                    <td>3</td>
+                                    <td>SD-897634</td>
+                                    <td>15,147</td>
+                                    <td>21 days</td>
+                                </tr>
+
+                                <tr>
+                                    <td>4</td>
+                                    <td>SD-985412</td>
+                                    <td>18,156</td>
+                                    <td>19 days</td>
+                                </tr>
+
+                                <tr class="pure-table-odd">
+                                    <td>5</td>
+                                    <td>SD-675345</td>
+                                    <td>10,330</td>
+                                    <td>15 days</td>
+                                </tr>
+
+                                <tr>
+                                    <td>6</td>
+                                    <td>SD-567890</td>
+                                    <td>5,100</td>
+                                    <td>12 days</td>
+                                </tr>
+
+                                <tr class="pure-table-odd">
+                                    <td>7</td>
+                                    <td>SD-567432</td>
+                                    <td>6,125</td>
+                                    <td>10 days</td>
+                                </tr>
+
+                                <tr>
+                                    <td>8</td>
+                                    <td>SD-679012</td>
+                                    <td>23,568</td>
+                                    <td>7 days</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <section>
+                        <template is="dom-bind" id="placeOrder">
+                            <paper-tabs selected="{{number}}" class="cyan" noink flex>
+                                <paper-tab>Place Order</paper-tab>
+                                <paper-tab>View Order</paper-tab>
+                            </paper-tabs>
+
+                            <iron-pages selected="{{number}}">
+                                <div>
+                                    <paper-material class="paper_material" elevation="3" style="height:300px">
+                                        <template id="Order" is="dom-bind">
+                                            <!-- BRANDS -->
+                                            <div class="horizontal-section-container">
+                                                <div>
+                                                    <div class="horizontal-section">
+                                                        <paper-dropdown-menu label="Choose your brand">
+                                                            <paper-menu class="dropdown-content" style="display:inline-block">
+                                                                <template is="dom-repeat" items="[[brand]]" as="brand">
+                                                                    <paper-icon-item>[[brand]]</paper-icon-item>
+                                                                </template>
+                                                            </paper-menu>
+                                                        </paper-dropdown-menu>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- CATEGORY -->
+                                            <div class="horizontal-section-container">
+                                                <div>
+                                                    <div class="horizontal-section">
+                                                        <paper-dropdown-menu label="Choose the category">
+                                                            <paper-menu class="dropdown-content" style="display:inline-block">
+                                                                <template is="dom-repeat" items="[[category]]" as="category">
+                                                                    <paper-icon-item>[[category]]</paper-icon-item>
+                                                                </template>
+                                                            </paper-menu>
+                                                        </paper-dropdown-menu>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- PRODUCTS -->
+                                            <div class="horizontal-section-container">
+                                                <div>
+                                                    <div class="horizontal-section">
+                                                        <paper-dropdown-menu label="Choose the product">
+                                                            <paper-menu class="dropdown-content" style="display:inline-block">
+                                                                <template is="dom-repeat" items="[[product]]" as="product">
+                                                                    <paper-icon-item>[[product]]</paper-icon-item>
+                                                                </template>
+                                                            </paper-menu>
+                                                        </paper-dropdown-menu>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- COLORS -->
+                                            <div class="horizontal-section-container">
+                                                <div>
+                                                    <div class="horizontal-section">
+                                                        <paper-dropdown-menu label="Choose the color">
+                                                            <paper-menu class="dropdown-content" style="display:inline-block">
+                                                                <template is="dom-repeat" items="[[color]]" as="color">
+                                                                    <paper-icon-item>[[color]]</paper-icon-item>
+                                                                </template>
+                                                            </paper-menu>
+                                                        </paper-dropdown-menu>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </paper-material>
+                                    <paper-material class="paper_material" elevation="3" style="height:250px">
+                                        <paper-icon-item>
+                                            <paper-fab icon="toc" mini item-icon style="background-color:#e57373"></paper-fab>
+                                            <div>No. of Pieces in</div>
+                                        </paper-icon-item>
+                                        <paper-item>
+                                            <paper-input label="Size 01" auto-validate pattern="[0-9]*" error-message="Only Numbers"></paper-input>
+                                        </paper-item>
+                                        <paper-item>
+                                            <paper-input label="Size 02" auto-validate pattern="[0-9]*" error-message="Only Numbers"></paper-input>
+                                        </paper-item>
+                                        <paper-item>
+                                            <paper-input label="Size 03" auto-validate pattern="[0-9]*" error-message="Only Numbers"></paper-input>
+                                        </paper-item>
+                                    </paper-material>
+                                    
+                                        <paper-button style="width:250px" class="paper_material">
+                                            <iron-icon icon="done"></iron-icon>
+                                            Add to cart
+                                        </paper-button>
+                                    
+
+                                    <paper-material class="paper_material" elevation="3" style="height:50px">
+                                        <paper-item disabled>
+                                            To view the placed orders click on the view order tab
+                                        </paper-item>
+                                    </paper-material>
+
+                                </div>
+                                <div>
+                                    <paper-material class="paper_material" elevation="3" style="height:60px">
+                                        <paper-item disabled>
+                                            Orders in cart will be displayed here.
+                                        </paper-item>
+                                    </paper-material>
+
+                                    <paper-button style="width:250px" class="paper_material">
+                                        <iron-icon icon="done"></iron-icon>
+                                        Place order
+                                    </paper-button>
+                                </div>
+                            </iron-pages>
+                        </template>
+                    </section>
+                    
+                    <section>
+                        <template is="dom-bind" id="bindingTabs">
+                            <paper-tabs selected="{{number}}" class="cyan" noink flex>
+                                <paper-tab>Placed Orders</paper-tab>
+                                <paper-tab>Dispatched</paper-tab>
+                                <paper-tab>Received Orders</paper-tab>
+                            </paper-tabs>
+                            <iron-pages selected="{{number}}">
+                                <div>
+                                    <paper-material class="paper_material" elevation="3">
+                                        <div class="content_cards">
+                                            <div class="list short" role="listbox">
+                                                <paper-menu>
+                                                    <paper-item>
+                                                        <paper-icon-item>
+                                                            <paper-fab icon="shopping-basket" mini item-icon style="background-color:#e57373"></paper-fab>
+                                                        </paper-icon-item>
+                                                        <paper-item-body>
+                                                            <div>Order ID</div>
+                                                            <div secondary>568902</div>
+                                                        </paper-item-body>
+                                                    </paper-item>
+                                                    <paper-item>
+                                                        Rs. 13,300.00
+                                                    </paper-item>
+
+                                                    <paper-submenu>
+                                                        <paper-item class="menu-trigger" style="background-color:#e0e0e0">Click here for more details</paper-item>
+                                                        <paper-menu class="menu-content sublist">
+                                                            <paper-item>
+                                                                EssDee/Panties
+                                                            </paper-item>
+                                                            <paper-item>
+                                                                Black/50
+                                                            </paper-item>
+                                                            <paper-item>
+                                                                Red/20
+                                                            </paper-item>
+                                                        </paper-menu>
+                                                    </paper-submenu>
+
+                                                    <paper-submenu disabled>
+                                                        <paper-item class="menu-trigger">Order placed on:14/10/2015 </paper-item>
+                                                    </paper-submenu>
+                                                </paper-menu>
+                                            </div>
+                                        </div>
+                                    </paper-material>
+
+                                    <paper-material class="paper_material" elevation="3">
+                                        <div class="content_cards">
+                                            <div class="list short" role="listbox">
+                                                <paper-menu>
+                                                    <paper-item>
+                                                        <paper-icon-item>
+                                                            <paper-fab icon="shopping-basket" mini item-icon style="background-color:#e57373"></paper-fab>
+                                                        </paper-icon-item>
+                                                        <paper-item-body>
+                                                            <div>Order ID</div>
+                                                            <div secondary>568932</div>
+                                                        </paper-item-body>
+                                                    </paper-item>
+                                                    <paper-item>
+                                                        Rs. 15,515.00
+                                                    </paper-item>
+
+                                                    <paper-submenu>
+                                                        <paper-item class="menu-trigger" style="background-color:#e0e0e0">Click here for more details</paper-item>
+                                                        <paper-menu class="menu-content sublist">
+                                                            <paper-item>
+                                                                EssDee/Leggins
+                                                            </paper-item>
+                                                            <paper-item>
+                                                                Black/30
+                                                            </paper-item>
+                                                            <paper-item>
+                                                                Red/50
+                                                            </paper-item>
+                                                        </paper-menu>
+                                                    </paper-submenu>
+
+                                                    <paper-submenu disabled>
+                                                        <paper-item class="menu-trigger">Order placed on:5/11/2015 </paper-item>
+                                                    </paper-submenu>
+                                                </paper-menu>
+                                            </div>
+                                        </div>
+                                    </paper-material>
+
+                                    <paper-material class="paper_material" elevation="3">
+                                        <div class="content_cards">
+                                            <div class="list short" role="listbox">
+                                                <paper-menu>
+                                                    <paper-item>
+                                                        <paper-icon-item>
+                                                            <paper-fab icon="shopping-basket" mini item-icon style="background-color:#e57373"></paper-fab>
+                                                        </paper-icon-item>
+                                                        <paper-item-body>
+                                                            <div>Order ID</div>
+                                                            <div secondary>568956</div>
+                                                        </paper-item-body>
+                                                    </paper-item>
+                                                    <paper-item>
+                                                        Rs. 22,500.00
+                                                    </paper-item>
+
+                                                    <paper-submenu>
+                                                        <paper-item class="menu-trigger" style="background-color:#e0e0e0">Click here for more details</paper-item>
+                                                        <paper-menu class="menu-content sublist">
+                                                            <paper-item>
+                                                                EssDee/Trunks
+                                                            </paper-item>
+                                                            <paper-item>
+                                                                Brown/25
+                                                            </paper-item>
+                                                            <paper-item>
+                                                                Black/50
+                                                            </paper-item>
+                                                        </paper-menu>
+                                                    </paper-submenu>
+
+                                                    <paper-submenu disabled>
+                                                        <paper-item class="menu-trigger">Order placed on:23/11/2015 </paper-item>
+                                                    </paper-submenu>
+                                                </paper-menu>
+                                            </div>
+                                        </div>
+                                    </paper-material>
+                                </div>
+                                <!-- DISPATCHED ORDER STARTS HERE-->
+                                <div>
+                                    <paper-material class="paper_material" elevation="3">
+                                        <div class="content_cards">
+                                            <div class="list short" role="listbox">
+                                                <paper-menu>
+                                                    <paper-item>
+                                                        <paper-icon-item>
+                                                            <paper-fab icon="maps:local-shipping" mini item-icon style="background-color:#8d6e63"></paper-fab>
+                                                        </paper-icon-item>
+                                                        <paper-item-body>
+                                                            <div>LR No</div>
+                                                            <div secondary>MH25H 2535</div>
+                                                        </paper-item-body>
+                                                    </paper-item>
+                                                    <paper-item>
+                                                        Rs. 14,300.00
+                                                    </paper-item>
+
+                                                    <paper-submenu>
+                                                        <paper-item class="menu-trigger" style="background-color:#e0e0e0">Click here for more details</paper-item>
+                                                        <paper-menu class="menu-content sublist">
+                                                            <paper-item>
+                                                                EssDee/Trax Pyjama
+                                                            </paper-item>
+                                                            <paper-item>
+                                                                Black/50
+                                                            </paper-item>
+                                                            <paper-item>
+                                                                Blue/20
+                                                            </paper-item>
+                                                        </paper-menu>
+                                                    </paper-submenu>
+
+                                                    <paper-submenu disabled>
+                                                        <paper-item class="menu-trigger">Order placed on:29/10/2015 </paper-item>
+                                                    </paper-submenu>
+                                                </paper-menu>
+                                            </div>
+                                        </div>
+                                    </paper-material>
+
+                                    <paper-material class="paper_material" elevation="3">
+                                        <div class="content_cards">
+                                            <div class="list short" role="listbox">
+                                                <paper-menu>
+                                                    <paper-item>
+                                                        <paper-icon-item>
+                                                            <paper-fab icon="maps:local-shipping" mini item-icon style="background-color:#8d6e63"></paper-fab>
+                                                        </paper-icon-item>
+                                                        <paper-item-body>
+                                                            <div>LR No</div>
+                                                            <div secondary>MH25H 2535</div>
+                                                            
+                                                        </paper-item-body>
+                                                    </paper-item>
+                                                    <paper-item>
+                                                        Rs. 15,515.00
+                                                    </paper-item>
+
+                                                    <paper-submenu>
+                                                        <paper-item class="menu-trigger" style="background-color:#e0e0e0">Click here for more details</paper-item>
+                                                        <paper-menu class="menu-content sublist">
+                                                            <paper-item>
+                                                                EssDee/Leggins
+                                                            </paper-item>
+                                                            <paper-item>
+                                                                Black/30
+                                                            </paper-item>
+                                                            <paper-item>
+                                                                Red/50
+                                                            </paper-item>
+                                                        </paper-menu>
+                                                    </paper-submenu>
+
+                                                    <paper-submenu disabled>
+                                                        <paper-item class="menu-trigger">Order placed on:26/11/2015 </paper-item>
+                                                    </paper-submenu>
+                                                </paper-menu>
+                                                
+                                            </div>
+                                        </div>
+                                    </paper-material>
+                                </div>
+                                <div>
+                                    <paper-material class="paper_material" elevation="3">
+                                        <div class="content_cards">
+                                            <div class="list short" role="listbox">
+                                                <paper-menu>
+                                                    <paper-item>
+                                                        <paper-icon-item>
+                                                            <paper-fab icon="done-all" mini item-icon style="background-color:#5c6bc0"></paper-fab>
+                                                        </paper-icon-item>
+                                                        <paper-item-body>
+                                                            <div>Bill No</div>
+                                                            <div secondary>SD-032578</div>
+                                                        </paper-item-body>
+                                                    </paper-item>
+                                                    <paper-item>
+                                                        Rs. 19,300.00
+                                                    </paper-item>
+
+                                                    <paper-submenu>
+                                                        <paper-item class="menu-trigger" style="background-color:#e0e0e0">Click here for more details</paper-item>
+                                                        <paper-menu class="menu-content sublist">
+                                                            <paper-item>
+                                                                EssDee/Trax Pyjama
+                                                            </paper-item>
+                                                            <paper-item>
+                                                                Black/50
+                                                            </paper-item>
+                                                            <paper-item>
+                                                                Blue/20
+                                                            </paper-item>
+                                                        </paper-menu>
+                                                    </paper-submenu>
+
+                                                    <paper-submenu disabled>
+                                                        <paper-item class="menu-trigger">Order received on:29/10/2015 </paper-item>
+                                                    </paper-submenu>
+                                                </paper-menu>
+                                            </div>
+                                        </div>
+                                    </paper-material>
+                                </div>
+                            </iron-pages>
+                        </template>
+                    </section>
+
+                </iron-pages>
+        </paper-drawer-panel>
+
+
+    </template>
+
+        <!-- Cordova reference, this is added to your app when it's built. -->
+        <script src="cordova.js"></script>
+        <script src="scripts/platformOverrides.js"></script>
+
+        <script src="scripts/index.js"></script>
+        <script>
+            document.addEventListener('WebComponentsReady', function () {
+                var template = document.querySelector('template#app');
+                template.page = 0;
+                var bindingTabs = document.querySelector("template#bindingTabs");
+                bindingTabs.number = 0; // selected is an index by default
+                var placeOrder = document.querySelector("template#placeOrder");
+                placeOrder.number = 0; // selected is an index by default
+
+                var Order = document.querySelector("template#Order");
+                Order.brand = [
+                  'Brand 1',
+                  'Brand 2',
+                  'Brand 3',
+                  'Brand 4'
+                ];
+
+                Order.category = [
+                    'Category 1',
+                    'Category 2',
+                    'Category 3',
+                    'Category 4'
+                ];
+
+                Order.product = [
+                    'Product 1',
+                    'Product 2',
+                    'Product 3',
+                    'Product 4'
+                ];
+
+                Order.color = [
+                    'Color 1',
+                    'Color 2',
+                    'Color 3',
+                    'Color 4'
+                ];
+            }); 
+            
+            function toDueBills(){
+                var template = document.querySelector('template#app');
+                template.page = 1;
+            }
+        </script>
+</body>
+</html>
